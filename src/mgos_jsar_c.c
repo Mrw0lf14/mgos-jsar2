@@ -3,7 +3,7 @@
 
 #define LED_PIN (2)
 
-bool  mgos_mgos_jsar_init(void) 
+bool  mgos_mgos_jsar2_init(void) 
 {
   mgos_gpio_set_mode(LED_PIN, MGOS_GPIO_MODE_OUTPUT);
   
