@@ -1,0 +1,60 @@
+author: applied ropbotics
+type: lib
+description: Peripheral library for Applied Robotics ESP-JS-AR board 
+version: 1.0
+
+tags:
+  - cpp
+
+sources:
+  - src
+
+includes:
+  - include
+
+filesystem:
+  - fs
+
+config_schema:
+
+  - ["user.lan.enable", "i", 1, {title: "User Settings: lan enable"}]
+  - ["user.can.enable", "i", 0, {title: "User Settings: can enable"}]
+  - ["user.spi.enable", "i", 0, {title: "User Settings: can enable"}]
+  - ["user.irtx.enable", "i", 0, {title: "User Settings: can enable"}]
+  - ["user.irrx.enable", "i", 0, {title: "User Settings: can enable"}]
+  - ["user.sdcard.enable", "i", 0, {title: "User Settings: can enable"}]
+
+  - ["debug.level", 2]
+  - ["debug.mbedtls_level", 0]
+  - ["wifi.ap.enable", false]
+  - ["wifi.sta.enable", false]
+  - ["bt.enable", false]
+  - ["eth.enable", false]
+  - ["eth.dhcp_hostname", "s", {title: "Host name to include in DHCP requests"}]
+  - ["eth.clk_mode", "i", 0, {title: "50 MHz clock source: 0 in <- GPIO0, 1 out -> GPIO0, 2 out -> GPIO16, 3 out -> GPIO17 (inverted)"}]
+  - ["eth.mdc_gpio", "i", 23, {title: "GPIO to use for RMII MDC signal"}]
+  - ["eth.mdio_gpio", "i", 18, {title: "GPIO to use for RMII MDIO signal"}]
+  - ["eth.phy_pwr_gpio", "i", -1, {title: "GPIO to use for PHY PWR control signal"}]
+
+build_vars:
+  MGOS_FALSE_HEAP_LOG: 1
+  ESP_IDF_EXTRA_COMPONENTS: >
+    ${build_vars.ESP_IDF_EXTRA_COMPONENTS}
+    esp_eth
+
+cdefs:
+  # Select the PHY model. Only one at a time.
+  MGOS_ETH_PHY_IP101: 0
+  MGOS_ETH_PHY_RTL8201: 0
+  MGOS_ETH_PHY_LAN87x0: 1
+  MGOS_ETH_PHY_DP83848: 0
+  
+libs:
+  - location: https://github.com/mongoose-os-libs/mjs
+  - location: https://github.com/mongoose-os-libs/bt-service-debug
+  - location: https://github.com/mongoose-os-libs/ethernet
+  - location: https://github.com/mongoose-os-libs/lwip
+  - location: https://github.com/Mrw0lf14/mgos-dxlmaster
+
+
+manifest_version: 2017-09-29
